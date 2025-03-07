@@ -1,26 +1,63 @@
-body{
-    background: url("img/tile_color.png") repeat;
-    background-size: 10%;
-    -webkit-animation: scrolling 20s linear infinite;
-    -moz-animation: scrolling 20s linear infinite;
-    -o-animation: scrolling 20s linear infinite;
-    animation: scrolling 20s linear infinite;
-    overflow: hidden;
-    scrollbar-width: none; /* Firefox */
+/* Basic reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-  body::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, Edge */
-  }
+/* Tiled background with two-direction scroll */
+body {
+  background-color: #fbaa60; /* Set background color */
+  background: url('img/tile_color.png') repeat;
+  background-attachment: fixed;
+  background-size: 25%; /* Scale the background image */
+  height: 100vh;
+  overflow: hidden;
+  animation: fadeIn 2s ease-out;
+}
 
-@-webkit-keyframes scrolling {
-  from{
+/* Content styling */
+.content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-align: center;
+  z-index: 1;
+}
+
+/* Fade in animation */
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+  }
+  to {
+      opacity: 1;
+  }
+}
+
+/* Scrolling effect for the background */
+@keyframes scrollBackground {
+  0% {
       background-position: 0 0;
   }
-  to{
-      background-position: 75% 75%;
+  100% {
+      background-position: 100% 100%;
   }
 }
+
+/* Apply scrolling background animation */
+body {
+  animation: fadeIn 2s ease-out, scrollBackground 20s linear infinite;
+}
+
+
+
+
+
+
+
 
 .container {
     display: grid;
@@ -29,17 +66,21 @@ body{
     width: 100vw;
   }
 
+/* Initial spin-in animation */
+.spin-in {
+  opacity: 0;
+  transform: rotate(-360deg) scale(0.5);
+  animation: spinIn 1s ease-out forwards;
+}
 
-  .bounce-image {
-    display: inline-block;
-    transition: transform 0.3s ease-in-out;
+/* Spin-in keyframes (runs only once on load) */
+@keyframes spinIn {
+  0% {
+    opacity: 0;
+    transform: rotate(-360deg) scale(0.5);
   }
-  
-  .bounce-image:hover {
-    animation: bounce 0.6s ease infinite;
+  100% {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
   }
-  
-  @keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-  }
+}
